@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"database/sql"
 	"errors"
 	"log"
 	"net/http"
@@ -11,14 +12,32 @@ import (
 
 	"campaign/internal/config"
 	"campaign/internal/server"
+
+	_ "github.com/lib/pq"
 )
 
 func main() {
 	cfg := config.Load()
 
+	//database connection segment
+	connStr := config.GetVal("DBCONNSTR")
+
+	// Open connection
+	db, err := sql.Open("postgres", connStr)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+
+	// Verify connection
+	if err := db.Ping(); err != nil {
+		log.Fatal("Could not connect to database:", err)
+	}
+	log.Println("Successfully connected to PostgreSQL!")
+
 	srv := &http.Server{
 		Addr:              cfg.Addr,
-		Handler:           server.New(cfg),
+		Handler:           server.New(cfg, db),
 		ReadHeaderTimeout: 5 * time.Second,
 	}
 

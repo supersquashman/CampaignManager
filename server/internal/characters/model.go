@@ -16,9 +16,15 @@ func ParseKind(s string) (Kind, bool) {
 	return "", false
 }
 
+// type CharacterLevels struct {
+// 	Class string
+// 	Level int
+// }
+
 type Character struct {
-	ID      int    `json:"id"`
-	Name    string `json:"name"`
-	Kind    Kind   `json:"kind"`
-	Summary string `json:"summary"`
+	ID                int    `json:"id"`
+	Name              string `json:"name"`
+	ClassLevels       string `json:"ClassLevels"`
+	PreferredMissions string `json:"PreferredMissions"`
+	PartyRoles        string `json:"PartyRoles"`
 }
