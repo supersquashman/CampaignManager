@@ -5,3 +5,5 @@ export interface Entity {
   title?: string;
   [field: string]: unknown;
 }
+
+export type StringMap = Record<string, string | number>;

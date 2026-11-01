@@ -1,7 +1,9 @@
 import { API_BASE } from './config';
 
 export class ApiError extends Error {
-  constructor(public status: number, message: string) {
+  constructor(public status: number, message: string,
+    /** Per-field validation messages from a 422 response, keyed by JSON field name. */
+    public fields: Record<string, string> = {},) {
     super(message);
   }
 }
