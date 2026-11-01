@@ -14,6 +14,9 @@ export const STARTING_TOWNS: {value: string, label:string}[] = [
   {value:'fishtown', label:'Fishing Village'}
 ]
 
+export const PARTY_ROLES: string[] = ['Face','Negotiator','DPS','Healing','Tank','Stealth','Thief']
+export const ROLE_ORDINALITY: string[] = ['Primary','Secondary','Tertiary','Emergency']
+
 
 // export interface Character extends Entity {
 //     id: number;

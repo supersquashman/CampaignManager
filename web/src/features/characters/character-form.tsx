@@ -4,7 +4,7 @@ import { Field } from '../../shared/components/field';
 import { Modal } from '../../shared/components/modal';
 import { PairEditor, pairsToObject, type Pair } from '../../shared/components/pair-editor';
 import { charactersService } from './characters.service';
-import { CHARACTER_TYPES, type Character, type CharacterType } from './characters.types';
+import { CHARACTER_TYPES, PARTY_ROLES, ROLE_ORDINALITY, STARTING_TOWNS, type Character, type CharacterType } from './characters.types';
 
 interface CharacterFormProps {
   initialType: CharacterType;
@@ -93,20 +93,37 @@ export function CharacterForm({ initialType, onSaved, onClose }: CharacterFormPr
         />
         <PairEditor
           title="Party roles"
-          labelHeading="Rank (e.g. primary)"
-          valueHeading="Role"
+          // labelHeading="Rank (e.g. primary)"
+          // valueHeading="Role"
+          labelHeading='Role'
+          valueHeading='Rank (e.g. primary)'
+          rankLabels={PARTY_ROLES}
+          valueOptions={ROLE_ORDINALITY}
           pairs={rolePairs}
           onChange={setRolePairs}
           error={problems.partyRoles}
         />
 
         <div class="form-two">
-          <Field label="Hometown" error={problems.hometown}>
-            <input {...bind('hometown')} />
+          <Field label="Hometown" required error={problems.hometown}>
+            <select required {...bind('hometown')}>
+              {STARTING_TOWNS.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
           </Field>
-          <Field label="Starting town" error={problems.starting_town}>
-            <input {...bind('starting_town')} />
+          <Field label="Starting Town" required error={problems.starting_town}>
+            <select required {...bind('starting_town')}>
+              {STARTING_TOWNS.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
           </Field>
+          
         </div>
 
         {failure && <p class="field-error">{failure}</p>}
